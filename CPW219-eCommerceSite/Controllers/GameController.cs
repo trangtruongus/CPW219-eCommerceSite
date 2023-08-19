@@ -20,12 +20,15 @@ namespace CPW219_eCommerceSite.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Game g)
+        public async Task<IActionResult> Create(Game g)
         {
             if (ModelState.IsValid)
             {
-                _context.Games.Add(g);  // Prepares insert
-                _context.SaveChanges(); // Executes pending insert
+                _context.Games.Add(g);     // Prepares insert
+
+                // For async code info in the tutorial
+                // https://docs.microsoft.com/en-us/aspnet/core/data/ef-mvc/intro?view=aspnetcore-6.0#asynchronous-code
+                await _context.SaveChangesAsync();        // Executes pending insert
 
                 ViewData["Message"] = $"{g.Title} was added successfully!";
                 return View();
