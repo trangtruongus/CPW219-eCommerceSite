@@ -47,5 +47,18 @@ namespace CPW219_eCommerceSite.Controllers
 
             return View(g);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            Game? gameToEdit = await _context.Games.FindAsync(id);
+
+            if (gameToEdit == null)
+            {
+                return NotFound();
+            }
+
+            return View(gameToEdit);
+        }
     }
 }
