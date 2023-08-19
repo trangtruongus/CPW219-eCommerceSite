@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CPW219_eCommerceSite.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CPW219_eCommerceSite.Data
 {

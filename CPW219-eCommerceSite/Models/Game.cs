@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CPW219_eCommerceSite
+namespace CPW219_eCommerceSite.Models
 {
     /// <summary>
     /// Represents a single game for available for purchase
