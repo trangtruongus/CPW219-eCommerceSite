@@ -14,13 +14,29 @@ namespace CPW219_eCommerceSite.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id)
         {
             // List<Game> games = _context.Games.ToList();
-            List<Game> games = await (from game in _context.Games
-                                      select game).ToListAsync();
 
-            return View(games);
+            const int NumGamesToDisplayPerPage = 3;
+            const int PageOffset = 1; // Needs a page offset to use current page and figure out, num games to skip
+
+            int currPage = id ?? 1; // Sets currPage to id if it has a value, otherwise use 1
+
+            int totalNumOfProducts = await _context.Games.CountAsync();
+            double maxNumPages = Math.Ceiling((double)totalNumOfProducts / NumGamesToDisplayPerPage);
+            // Rounding pages up, to next whole page number
+            int lastPage = Convert.ToInt32(maxNumPages); 
+
+            List<Game> games = await (from game in _context.Games
+                                      select game)
+                                     .Skip(NumGamesToDisplayPerPage * (currPage - PageOffset))
+                                     .Take(NumGamesToDisplayPerPage)
+                                     .ToListAsync();
+
+            GameCatalogViewModel catalogModel = new(games, lastPage, currPage);
+
+            return View(catalogModel);
         }
 
 
